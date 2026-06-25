@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 public class OutputLap
 {
-    public int lap { get; set; } = 0;
+    public int lap { get; set; } = 1;
     public List<OutputSegment> segments { get; set; } = new List<OutputSegment>();
     public OutputPit pit { get; set; }
     public OutputSegment AddSegment(Segment inputSegment)
