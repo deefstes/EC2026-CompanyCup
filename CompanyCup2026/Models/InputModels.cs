@@ -39,55 +39,13 @@ public class Condition
     public int deceleration_multiplier { get; set; }
 }
 
-public class Hard
-{
-    public int life_span { get; set; }
-    public double base_friction { get; set; }
-    public double dry_friction_multiplier { get; set; }
-    public double cold_friction_multiplier { get; set; }
-    public double light_rain_friction_multiplier { get; set; }
-    public double heavy_rain_friction_multiplier { get; set; }
-    public double dry_degradation { get; set; }
-    public double cold_degradation { get; set; }
-    public double light_rain_degradation { get; set; }
-    public double heavy_rain_degradation { get; set; }
-}
-
-public class Intermediate
-{
-    public int life_span { get; set; }
-    public double base_friction { get; set; }
-    public double dry_friction_multiplier { get; set; }
-    public double cold_friction_multiplier { get; set; }
-    public double light_rain_friction_multiplier { get; set; }
-    public double heavy_rain_friction_multiplier { get; set; }
-    public double dry_degradation { get; set; }
-    public double cold_degradation { get; set; }
-    public double light_rain_degradation { get; set; }
-    public double heavy_rain_degradation { get; set; }
-}
-
-public class Medium
-{
-    public int life_span { get; set; }
-    public double base_friction { get; set; }
-    public double dry_friction_multiplier { get; set; }
-    public double cold_friction_multiplier { get; set; }
-    public double light_rain_friction_multiplier { get; set; }
-    public double heavy_rain_friction_multiplier { get; set; }
-    public double dry_degradation { get; set; }
-    public double cold_degradation { get; set; }
-    public double light_rain_degradation { get; set; }
-    public double heavy_rain_degradation { get; set; }
-}
-
 public class Properties
 {
-    public Soft Soft { get; set; }
-    public Medium Medium { get; set; }
-    public Hard Hard { get; set; }
-    public Intermediate Intermediate { get; set; }
-    public Wet Wet { get; set; }
+    public TyreProperties Soft { get; set; }
+    public TyreProperties Medium { get; set; }
+    public TyreProperties Hard { get; set; }
+    public TyreProperties Intermediate { get; set; }
+    public TyreProperties Wet { get; set; }
 }
 
 public class Race
@@ -126,7 +84,7 @@ public class Segment
     public int? radius_m { get; set; }
 }
 
-public class Soft
+public class TyreProperties
 {
     public int life_span { get; set; }
     public double base_friction { get; set; }
@@ -155,18 +113,3 @@ public class Weather
 {
     public List<Condition> conditions { get; set; }
 }
-
-public class Wet
-{
-    public int life_span { get; set; }
-    public double base_friction { get; set; }
-    public double dry_friction_multiplier { get; set; }
-    public double cold_friction_multiplier { get; set; }
-    public double light_rain_friction_multiplier { get; set; }
-    public double heavy_rain_friction_multiplier { get; set; }
-    public double dry_degradation { get; set; }
-    public double cold_degradation { get; set; }
-    public double light_rain_degradation { get; set; }
-    public double heavy_rain_degradation { get; set; }
-}
-
