@@ -12,7 +12,8 @@ namespace CompanyCup2026
             // 2. Deserialize the string into your C# class
             var root = JsonSerializer.Deserialize<Root>(jsonString);
             
-            var output = new OutputRoot();
+            var solver = new Solver();
+            var output = solver.SolverLevel1(root);
 
             File.WriteAllText("output.txt", JsonSerializer.Serialize(output));
         }
