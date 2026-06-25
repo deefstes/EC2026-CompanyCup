@@ -15,7 +15,7 @@ namespace CompanyCup2026
             var solver = new Solver();
             var output = solver.SolverLevel1(root);
 
-            File.WriteAllText("output.txt", JsonSerializer.Serialize(output));
+            File.WriteAllText("../../../../output.txt", JsonSerializer.Serialize(output));
         }
     }
 }
