@@ -62,11 +62,11 @@ namespace CompanyCup2026.Tests.Tests
         public void CalculateTargetSpeed_ClampsToMaxSpeed_ReturnsClampedAndCorrectDistance()
         {
             // Same setup as basic but force maxSpeed below computed target so clamp happens.
-            double dist = 100.0;
+            double dist = 30.0;
             double speedStart = 0.0;
             double speedEnd = 0.0;
-            double accel = 2.0;
-            double decel = 2.0;
+            double accel = 5.0;
+            double decel = 5.0;
             double maxSpeed = 10.0; // small so clamp occurs
 
             var (targetSpeed, brakeDistance) = CustomMath.CalculateTargetSpeed(
@@ -74,8 +74,9 @@ namespace CompanyCup2026.Tests.Tests
 
             Assert.Equal(maxSpeed, targetSpeed, 6);
 
-            double expectedAccelDistance = (maxSpeed * maxSpeed - speedStart * speedStart) / (2 * accel);
-            Assert.Equal(expectedAccelDistance, brakeDistance, 6);
+            double decelDistance = (targetSpeed * targetSpeed - speedEnd * speedEnd) / (2 * decel);
+            double expectedBrakeDistance = dist - decelDistance;
+            Assert.Equal(expectedBrakeDistance, brakeDistance, 6);
         }
 
         [Fact]

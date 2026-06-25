@@ -35,13 +35,12 @@
             if (targetSpeed > maxSpeed)
                 targetSpeed = maxSpeed;
 
-            // Distance required to accelerate to the target speed.
-            double accelDistance =
-                Math.Max(0.0,
-                    (targetSpeed * targetSpeed - speedStart * speedStart)
-                    / (2 * accel));
+            // Distance at which braking should be applied
+            double brakingDistance = Math.Max(0.0, (targetSpeed * targetSpeed - speedEnd * speedEnd) / (2 * decel));
 
-            return (targetSpeed, accelDistance);
+            double brakePoint = Math.Max(0.0, dist - brakingDistance);
+
+            return (targetSpeed, brakePoint);
         }
     }
 }
