@@ -21,6 +21,9 @@ public class Solver
 
                 var inputSegment = inputRoot.track.segments[i];
                 var outputSegment = outputLap.AddSegment(inputSegment);
+
+                outputSegment.SetFuelTrackingProperties(carSpeed, endSpeed, inputSegment.length_m);
+
                 if (outputSegment.type == "corner")
                 {
                     continue;
@@ -36,8 +39,6 @@ public class Solver
 
                 outputSegment.target_ms = (int)targetSpeed;
                 outputSegment.brake_start_m_before_next = (int)brakePoint;
-                
-                outputSegment.SetFuelTrackingProperties(carSpeed, endSpeed, inputSegment.length_m);
 
                 carSpeed = endSpeed;
             }

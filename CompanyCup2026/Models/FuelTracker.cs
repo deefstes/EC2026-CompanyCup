@@ -29,13 +29,13 @@ public class FuelTracker
 
             for (var i=0; i < lap.segments.Count; i++)
             {
-                var endSpeed = inputRoot.track.segments[(i + 1) % inputRoot.track.segments.Count].MaxCornerSpeed(currentTyreSet.TyreProperties.base_friction);
+                var segment = lap.segments[i];
+                var fuelUsage = CalculateFuelUsage(segment.startSpeed, segment.endSpeed, segment.length);
 
 
-                carSpeed = endSpeed;
             }
 
-            outputLap.SetNoPit();
+            lap.SetNoPit();
         }        
     }
 }
