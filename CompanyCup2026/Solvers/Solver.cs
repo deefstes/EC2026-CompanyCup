@@ -19,14 +19,15 @@ public class Solver
             {
                 var endSpeed = inputRoot.track.segments[(i + 1) % inputRoot.track.segments.Count].MaxCornerSpeed(currentTyreSet.TyreProperties.base_friction);
 
-                var outputSegment = outputLap.AddSegment(inputRoot.track.segments[i]);
+                var inputSegment = inputRoot.track.segments[i];
+                var outputSegment = outputLap.AddSegment(inputSegment);
                 if (outputSegment.type == "corner")
                 {
                     continue;
                 }
 
                 var (targetSpeed, brakePoint) = CustomMath.CalculateTargetSpeed(
-                    inputRoot.track.segments[i].length_m,
+                    inputSegment.length_m,
                     carSpeed,
                     endSpeed,
                     inputRoot.car.accel_mse2,
@@ -35,6 +36,9 @@ public class Solver
 
                 outputSegment.target_ms = (int)targetSpeed;
                 outputSegment.brake_start_m_before_next = (int)brakePoint;
+                
+                outputSegment.SetFuelTrackingProperties(carSpeed, endSpeed, inputSegment.length_m);
+
                 carSpeed = endSpeed;
             }
 

@@ -75,5 +75,19 @@ public class OutputSegment
     [JsonPropertyName("target_m/s")]
     public int target_ms { get; set; }
     public int brake_start_m_before_next { get; set; }
+
+    public void SetFuelTrackingProperties(double startSpeed, double endSpeed, int length)
+    {
+        this.startSpeed = startSpeed;
+        this.endSpeed = endSpeed;
+        this.length = length;
+    }
+
+    [JsonIgnore]
+    public double startSpeed { get; set; }
+    [JsonIgnore]
+    public double endSpeed { get; set; }
+    [JsonIgnore]
+    public int length { get; set; }
 }
 
