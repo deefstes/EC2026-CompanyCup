@@ -21,7 +21,7 @@
 
             openNodes.Enqueue(
                 start,
-                graph.EstimateCost(start, goal));
+                graph.GetCost(start, goal));
 
             while (openNodes.Count > 0)
             {
@@ -68,7 +68,7 @@
 
                     var estimatedTotalPathCost =
                         costToReachNeighbour +
-                        graph.EstimateCost(neighbour, goal);
+                        graph.GetCost(neighbour, goal);
 
                     openNodes.Enqueue(
                         neighbour,
