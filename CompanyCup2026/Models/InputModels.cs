@@ -74,6 +74,52 @@ public class Root
     public Tyres tyres { get; set; }
     public List<AvailableSet> available_sets { get; set; }
     public Weather weather { get; set; }
+    
+    public List<TyreSet> GetTyreSets()
+    {
+        var tyreSets = new List<TyreSet>();
+        
+        foreach(var available_set in available_sets)
+        {
+            foreach(var tyreSetId in available_set.ids)
+            {
+                tyreSets.Add(new TyreSet(tyreSetId, available_set.compound, tyres.properties));
+            }
+        }
+
+        return tyreSets;
+    }
+}
+
+public class TyreSet
+{
+    public TyreSet (int id, string compound, Properties properties)
+    {
+        this.id = id;
+        this.compound = compound;
+        switch(compound)
+        {
+            case "Soft":
+                this.TyreProperties = properties.Soft;
+                break;
+            case "Medium":
+                this.TyreProperties = properties.Medium;
+                break;
+            case "Hard":
+                this.TyreProperties = properties.Hard;
+                break;
+            case "Intermediate":
+                this.TyreProperties = properties.Intermediate;
+                break;
+            case "Wet":
+                this.TyreProperties = properties.Wet;
+                break;
+        }
+    }
+
+    public int id { get; set; }
+    public string compound { get; set; }
+    public TyreProperties TyreProperties{ get; set; }
 }
 
 public class Segment
