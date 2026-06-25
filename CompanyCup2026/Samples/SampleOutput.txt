@@ -1,0 +1,99 @@
+{ 
+  "initial_tyre_id": 1, 
+  "laps": [ 
+    { 
+      "lap": 1, 
+      "segments": [ 
+        { 
+          "id": 1, 
+          "type": "straight", 
+          "target_m/s": 70, 
+          "brake_start_m_before_next": 800 
+        }, 
+        { 
+          "id": 2, 
+          "type": "corner" 
+        }, 
+        { 
+          "id": 3, 
+          "type": "straight", 
+          "target_m/s": 50, 
+          "brake_start_m_before_next": 500 
+        }, 
+        { 
+          "id": 4, 
+          "type": "corner" 
+        }, 
+        { 
+          "id": 5, 
+          "type": "corner" 
+        }, 
+        { 
+          "id": 6, 
+          "type": "corner"
+        }, 
+        { 
+          "id": 7, 
+          "type": "straight", 
+          "target_m/s": 60, 
+          "brake_start_m_before_next": 500 
+        }, 
+        { 
+          "id": 8, 
+          "type": "corner" 
+        } 
+      ], 
+      "pit": { 
+        "enter": false 
+      } 
+    }, 
+    { 
+      "lap": 2, 
+      "segments": [ 
+        { 
+          "id": 1, 
+          "type": "straight", 
+          "target_m/s": 70, 
+          "brake_start_m_before_next": 800 
+        }, 
+        { 
+          "id": 2, 
+          "type": "corner" 
+        }, 
+        { 
+          "id": 3, 
+          "type": "straight", 
+          "target_m/s": 50, 
+          "brake_start_m_before_next": 500 
+        }, 
+        { 
+          "id": 4, 
+          "type": "corner" 
+        }, 
+        { 
+          "id": 5, 
+          "type": "corner" 
+        }, 
+        { 
+          "id": 6, 
+          "type": "corner" 
+        }, 
+{ 
+"id": 7, 
+"type": "straight", 
+"target_m/s": 60, 
+"brake_start_m_before_next": 500 
+}, 
+{ 
+"id": 8, 
+"type": "corner" 
+} 
+], 
+"pit": { 
+"enter": true, 
+"tyre_change_set_id": 3, 
+"fuel_refuel_amount_l": 20 
+} 
+} 
+] 
+}
