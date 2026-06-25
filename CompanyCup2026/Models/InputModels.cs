@@ -1,6 +1,16 @@
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 using System.Text.Json.Serialization;
 
+public static class RaceConstants
+{
+    public const double Gravity = 9.8;
+    public const double K_STRAIGHT = 0.0000166;
+    public const double K_BRAKING = 0.0398;
+    public const double K_CORNER = 0.000265;
+    public const double K_BASE_FUEL = 0.0005;
+    public const double K_DRAG = 0.0000000015;
+}
+
 public class AvailableSet
 {
     public List<int> ids { get; set; }
@@ -28,6 +38,37 @@ public class Car
 
     [JsonPropertyName("fuel_consumption_l/m")]
     public double fuel_consumption_lm { get; set; }
+
+    public double TimeToChangeSpeed(double initialSpeed, double finalSpeed)
+    {
+        return (finalSpeed - initialSpeed) / accel_mse2;
+    }
+
+    public double TimeToDecelerate(double initialSpeed, double finalSpeed)
+    {
+        return (finalSpeed - initialSpeed) / -brake_mse2;
+    }
+
+    public double DistanceFromSpeeds(double initialSpeed, double finalSpeed, double acceleration)
+    {
+        return (Math.Pow(finalSpeed, 2) - Math.Pow(initialSpeed, 2)) / (2 * acceleration);
+    }
+
+    public double DistanceFromTime(double initialSpeed, double time, double acceleration)
+    {
+        return (initialSpeed * time) + (0.5 * acceleration * Math.Pow(time, 2));
+    }
+
+    public double Speed(double distance, double time)
+    {
+        return distance / time;
+    }
+
+    public double FuelUsed(double initialSpeed, double finalSpeed, double distance)
+    {
+        double avgSpeed = (initialSpeed + finalSpeed) / 2.0;
+        return (RaceConstants.K_BASE_FUEL + (RaceConstants.K_DRAG * Math.Pow(avgSpeed, 2))) * distance;
+    }
 }
 
 public class Condition
@@ -64,6 +105,37 @@ public class Race
     public double fuel_soft_cap_limit_l { get; set; }
     public int starting_weather_condition_id { get; set; }
     public double time_reference_s { get; set; }
+
+    public double RefuelTime(double fuelAmount)
+    {
+        return fuelAmount / pit_refuel_rate_ls;
+    }
+
+    public double PitStopTime(double refuelTime)
+    {
+        return refuelTime + pit_tyre_swap_time_s + base_pit_stop_time_s;
+    }
+
+    public double FuelBonus(double fuelUsed)
+    {
+        double ratio = fuelUsed / fuel_soft_cap_limit_l;
+        return (-1_000_000.0 * Math.Pow(1 - ratio, 2)) + 1_000_000.0;
+    }
+
+    public double BaseScore(double totalTime)
+    {
+        return 1_000_000_000.0 / totalTime;
+    }
+
+    public double TyreBonus(double totalDegradation, int blowouts)
+    {
+        return (100_000.0 * totalDegradation) - (50_000.0 * blowouts);
+    }
+
+    public double FinalScore(double totalTime, double fuelUsed, double tyreDeg, int blowouts)
+    {
+        return BaseScore(totalTime) + FuelBonus(fuelUsed) + TyreBonus(tyreDeg, blowouts);
+    }
 }
 
 public class Root
@@ -128,6 +200,16 @@ public class Segment
     public string type { get; set; }
     public int length_m { get; set; }
     public int? radius_m { get; set; }
+
+    public double MaxCornerSpeed(double tyreFriction)
+    {
+        return Math.Sqrt(tyreFriction * RaceConstants.Gravity * radius_m.GetValueOrDefault());
+    }
+
+    public double MaxCornerSpeedWithCrawl(double tyreFriction, double crawlSpeed)
+    {
+        return Math.Sqrt((tyreFriction * RaceConstants.Gravity * radius_m.GetValueOrDefault()) + crawlSpeed);
+    }
 }
 
 public class TyreProperties
@@ -142,6 +224,28 @@ public class TyreProperties
     public double cold_degradation { get; set; }
     public double light_rain_degradation { get; set; }
     public double heavy_rain_degradation { get; set; }
+
+    public double TyreFriction(double totalDegradation, double weatherMultiplier)
+    {
+        return (base_friction - totalDegradation) * weatherMultiplier;
+    }
+
+    public double StraightDegradation(double degradationRate, double distance)
+    {
+        return degradationRate * distance * RaceConstants.K_STRAIGHT;
+    }
+
+    public double BrakingDegradation(double initialSpeed, double finalSpeed, double degradationRate)
+    {
+        double vi = initialSpeed / 100.0;
+        double vf = finalSpeed / 100.0;
+        return (Math.Pow(vi, 2) - Math.Pow(vf, 2)) * RaceConstants.K_BRAKING * degradationRate;
+    }
+
+    public double CornerDegradation(double speed, double radius, double degradationRate)
+    {
+        return RaceConstants.K_CORNER * Math.Pow(speed, 2) * radius * degradationRate;
+    }
 }
 
 public class Track

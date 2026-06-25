@@ -1,4 +1,4 @@
-﻿public static class RaceMath
+﻿public static class RaceFormulas
 {
 
     // CONSTANTS
